@@ -31,11 +31,11 @@ public class RandomEntityCreation {
 	}
 
 	private static void createQuestions() {
-		qualityOrm.addQuestion(new Question(1,"Are you satisfied with the quality of services?", 5, 1.0f), servises);
-		qualityOrm.addQuestion(new Question(2,"Are you satisfied with timelines?", 5, 0.9f), servises);
-		qualityOrm.addQuestion(new Question(3,"Our employee was polite to you?", 5, 0.8f), servises);
-		qualityOrm.addQuestion(new Question(4,"Overall rating of our service", 5, 1.0f), servises);
-		qualityOrm.addQuestion(new Question(5,"Do you like our advertising?", 5, 0.0f), servises);
+		qualityOrm.addQuestion(new Question(1,"Are you satisfied with the quality of services?", 5), servises);
+		qualityOrm.addQuestion(new Question(2,"Are you satisfied with timelines?", 5), servises);
+		qualityOrm.addQuestion(new Question(3,"Our employee was polite to you?", 5), servises);
+		qualityOrm.addQuestion(new Question(4,"Overall rating of our service", 5), servises);
+		qualityOrm.addQuestion(new Question(5,"Do you like our advertising?", 5), servises);
 	}
 
 	private static void createRandomClients() {

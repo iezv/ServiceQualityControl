@@ -12,17 +12,15 @@ public class Question {
 	int questionId;
 	String questionBody;
 	int maxRating;
-	float wightRating;
-	
+		
 	@ManyToMany 
 	Set<Service> services;
 
-	public Question(int questionId, String questionBody, int maxRating, float wightRating) {
+	public Question(int questionId, String questionBody, int maxRating) {
 		super();
 		this.questionId = questionId;
 		this.questionBody = questionBody;
 		this.maxRating = maxRating;
-		this.wightRating = wightRating;
 		services = new HashSet<>();
 	}
 
@@ -40,10 +38,6 @@ public class Question {
 
 	public int getMaxRating() {
 		return maxRating;
-	}
-
-	public float getWightRating() {
-		return wightRating;
 	}
 
 	public Set<Service> getServices() {
@@ -79,7 +73,7 @@ public class Question {
 	@Override
 	public String toString() {
 		return "Question [questionId=" + questionId + ", questionBody=" + questionBody + ", maxRating=" + maxRating
-				+ ", wightRating=" + wightRating + ", services=" + services + "]";
+				+  ", services=" + services + "]";
 	}
 	
 	

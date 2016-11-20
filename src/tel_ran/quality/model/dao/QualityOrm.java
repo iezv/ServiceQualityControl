@@ -74,7 +74,6 @@ public class QualityOrm {
 		Set<Service> services = getServices(serviceNames);
 		question.setServices(services);
 		em.persist(question);
-		System.out.println(question);
 		return true;
 	}
 	

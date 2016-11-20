@@ -1,8 +1,5 @@
 package tel_ran.qualityControl.entities;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
-
 import javax.persistence.*;
 
 @Entity
