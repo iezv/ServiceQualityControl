@@ -7,6 +7,7 @@ import javax.persistence.*;
 public class ReceivedFeedback {
 	@Id
 	@Column(name = "feedbackid", nullable = false, insertable = true, updatable = true)
+	
 	int feedbackid;
 	Date feedbackdate;
 	String comment;
