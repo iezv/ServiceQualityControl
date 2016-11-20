@@ -10,6 +10,7 @@ public class RandomEntityCreation {
 	private static final Company COMPANY = new Company ("TOYOTA", "Tel Aviv", genManager);
 	private static final int N_EMPLOYEES = 5;
 	private static final int N_RANDOM = 100;
+	private static final int N_CLIENTS = 100;
 	static QualityOrm qualityOrm;
 	static Random gen = new Random();
 			
@@ -18,8 +19,17 @@ public class RandomEntityCreation {
 		qualityOrm = ctx.getBean(QualityOrm.class);
 		createRandonEmployees();
 		createCompany();
+		createRandomClients();
 		createServices();
 		ctx.close();
+	}
+
+	private static void createRandomClients() {
+		for (int i=0; i<N_CLIENTS; i++){
+			qualityOrm.addClient(new Client(10000000+i, "name"+gen.nextInt(N_RANDOM), "phone"+gen.nextInt(N_RANDOM), 
+					"email"+gen.nextInt(N_RANDOM), genRandomAddress()),COMPANY.getNamecompany());
+		}
+		
 	}
 
 	private static void createCompany() {

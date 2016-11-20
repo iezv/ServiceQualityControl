@@ -1,5 +1,8 @@
 package tel_ran.qualityControl.entities;
 
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,14 +18,6 @@ public class Service {
 	@OneToOne
     Employee responsibleperson;
 	
-	public Company getCompany() {
-		return company;
-	}
-
-	public void setCompany(Company company) {
-		this.company = company;
-	}
-
 	public Service(String servicename) {
 		super();
 		this.servicename = servicename;
@@ -32,6 +27,14 @@ public class Service {
 		super();
 	}
 
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+  
 	public String getServicename() {
 		return servicename;
 	}

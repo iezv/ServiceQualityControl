@@ -15,9 +15,6 @@ public class Company {
 	@OneToOne
 	Employee genmanager;
 	
-	@OneToMany (mappedBy="company")
-	Set<Service> services;
-	
 	public Company(String namecompany, String city, Employee genmanager) {
 		super();
 		this.namecompany = namecompany;

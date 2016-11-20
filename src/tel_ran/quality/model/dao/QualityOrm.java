@@ -49,7 +49,23 @@ public class QualityOrm {
 		return emp;
 	}
 
-	
+	@Transactional
+	public boolean addClient(Client client, String companyName) {
+		if (em.find(Client.class, client.getClientId()) != null)
+			return false;
+		Company company = getCompany(companyName);
+		client.setCompany(company);
+		em.persist(client);
+		return true;
+	}
+
+	private Set<Service> getServices(Set<String> serviceNames) {
+		Set<Service> services = new LinkedHashSet<>();
+		for(String name: serviceNames){
+			services.add(em.find(Service.class, name));
+		}
+		return services;
+	}
    
 	
 
