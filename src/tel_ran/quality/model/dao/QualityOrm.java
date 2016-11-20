@@ -29,6 +29,14 @@ public class QualityOrm {
 		return true;
 	}
 	
+	private Set<Question> getQuestions(Set<Integer> questionsId) {
+		Set<Question> questions = new HashSet<>();
+		for(Integer id: questionsId){
+			questions.add(em.find(Question.class, id));
+		}
+		return questions;
+	}
+
 	private Company getCompany(String namecompany) {
 		Company comp = em.find(Company.class, namecompany);
 		return comp;
@@ -58,16 +66,25 @@ public class QualityOrm {
 		em.persist(client);
 		return true;
 	}
-
+		
+	@Transactional
+	public boolean addQuestion(Question question, Set<String> serviceNames) {
+		if (em.find(Question.class, question.getQuestionId()) != null)
+			return false;
+		Set<Service> services = getServices(serviceNames);
+		question.setServices(services);
+		em.persist(question);
+		System.out.println(question);
+		return true;
+	}
+	
 	private Set<Service> getServices(Set<String> serviceNames) {
-		Set<Service> services = new LinkedHashSet<>();
+		Set<Service> services = new HashSet<>();
 		for(String name: serviceNames){
 			services.add(em.find(Service.class, name));
 		}
 		return services;
 	}
    
-	
-
-	
+		
 }

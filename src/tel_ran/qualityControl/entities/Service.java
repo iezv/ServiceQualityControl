@@ -1,7 +1,5 @@
 package tel_ran.qualityControl.entities;
-
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.*;
 
 import javax.persistence.*;
 
@@ -18,9 +16,21 @@ public class Service {
 	@OneToOne
     Employee responsibleperson;
 	
+	@ManyToMany (mappedBy="services")
+	Set<Question> questions;
+	
 	public Service(String servicename) {
 		super();
 		this.servicename = servicename;
+		questions = new HashSet<>();
+	}
+
+	public Set<Question> getQuestions() {
+		return questions;
+	}
+
+	public void setQuestions(Set<Question> questions) {
+		this.questions = questions;
 	}
 
 	public Service() {

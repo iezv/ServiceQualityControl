@@ -11,8 +11,13 @@ public class RandomEntityCreation {
 	private static final int N_EMPLOYEES = 5;
 	private static final int N_RANDOM = 100;
 	private static final int N_CLIENTS = 100;
+	private static final Set <String> servises = new HashSet<>();
 	static QualityOrm qualityOrm;
 	static Random gen = new Random();
+	
+	static{
+		servises.add("repair"); servises.add("tire_mounting"); servises.add("washing");
+	}
 			
 	public static void main(String[] args) throws Exception {
 		AbstractApplicationContext ctx = new FileSystemXmlApplicationContext("beans.xml");
@@ -21,7 +26,16 @@ public class RandomEntityCreation {
 		createCompany();
 		createRandomClients();
 		createServices();
+		createQuestions();
 		ctx.close();
+	}
+
+	private static void createQuestions() {
+		qualityOrm.addQuestion(new Question(1,"Are you satisfied with the quality of services?", 5, 1.0f), servises);
+		qualityOrm.addQuestion(new Question(2,"Are you satisfied with timelines?", 5, 0.9f), servises);
+		qualityOrm.addQuestion(new Question(3,"Our employee was polite to you?", 5, 0.8f), servises);
+		qualityOrm.addQuestion(new Question(4,"Overall rating of our service", 5, 1.0f), servises);
+		qualityOrm.addQuestion(new Question(5,"Do you like our advertising?", 5, 0.0f), servises);
 	}
 
 	private static void createRandomClients() {
@@ -29,7 +43,6 @@ public class RandomEntityCreation {
 			qualityOrm.addClient(new Client(10000000+i, "name"+gen.nextInt(N_RANDOM), "phone"+gen.nextInt(N_RANDOM), 
 					"email"+gen.nextInt(N_RANDOM), genRandomAddress()),COMPANY.getNamecompany());
 		}
-		
 	}
 
 	private static void createCompany() {
