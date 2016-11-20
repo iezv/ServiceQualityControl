@@ -84,6 +84,26 @@ public class QualityOrm {
 		}
 		return services;
 	}
+	
+	@Transactional
+	public boolean addReceivedFeedback(ReceivedFeedback feedback, int ClientId,String serviceName) {
+		if (em.find(ReceivedFeedback.class, feedback.getFeedbackid()) != null)
+			return false;
+		Client client = getClient(ClientId);
+		Service service = getService(serviceName);
+		feedback.setClient(client);
+		feedback.setService(service);
+		em.persist(feedback);
+		return true;
+	}
+
+	private Service getService(String serviceName) {
+		return em.find(Service.class, serviceName);
+	}
+
+	private Client getClient(int clientId) {
+		return em.find(Client.class, clientId);
+	}
    
 		
 }

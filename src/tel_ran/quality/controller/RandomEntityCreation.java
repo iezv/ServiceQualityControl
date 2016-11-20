@@ -1,4 +1,6 @@
 package tel_ran.quality.controller;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
@@ -27,7 +29,25 @@ public class RandomEntityCreation {
 		createRandomClients();
 		createServices();
 		createQuestions();
+		createRandomReceivedFeedbacks();
 		ctx.close();
+	}
+
+	private static void createRandomReceivedFeedbacks() {
+		for(int i=0; i<N_CLIENTS; i++){
+			qualityOrm.addReceivedFeedback(genReceivedFeedback(), 10000000+i, "repair");
+			qualityOrm.addReceivedFeedback(genReceivedFeedback(), 10000000+i, "tire_mounting");
+			qualityOrm.addReceivedFeedback(genReceivedFeedback(), 10000000+i, "washing");
+		}
+		
+	}
+
+	private static ReceivedFeedback genReceivedFeedback() {
+		return new ReceivedFeedback(gen.nextInt(100000000), genNewDate(), "comment"+gen.nextInt(N_RANDOM),genRandomResult());
+	}
+
+	private static Result genRandomResult() {
+		return new Result(1+gen.nextInt(5), 1+gen.nextInt(5), 1+gen.nextInt(5), 1+gen.nextInt(5), 1+gen.nextInt(5));
 	}
 
 	private static void createQuestions() {
@@ -69,6 +89,15 @@ public class RandomEntityCreation {
 		Address address = new Address("city"+gen.nextInt(N_RANDOM), "street"+gen.nextInt(N_RANDOM), 
 				                                                      gen.nextInt(N_RANDOM), gen.nextInt(N_RANDOM));
 		return address;
+	}
+	
+	private static Date genNewDate() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		try {
+			return format.parse(2016 +"-"+ gen.nextInt(11)+"-"+ gen.nextInt(28));
+		} catch (ParseException e) {
+			return new Date();
+		}
 	}
 
 		

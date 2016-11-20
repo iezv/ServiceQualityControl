@@ -10,7 +10,6 @@ public class ReceivedFeedback {
 	int feedbackid;
 	Date feedbackdate;
 	String comment;
-	
 	@Embedded
 	Result resultQuestion;
 	
@@ -20,11 +19,12 @@ public class ReceivedFeedback {
 	@OneToOne
 	Service service;
 		
-	public ReceivedFeedback(int feedbackid, Date feedbackdate, String comment) {
+	public ReceivedFeedback(int feedbackid, Date feedbackdate, String comment, Result resultQuestion) {
 		super();
 		this.feedbackid = feedbackid;
 		this.feedbackdate = feedbackdate;
 		this.comment = comment;
+		this.resultQuestion = resultQuestion;
 	}
 	
 	public ReceivedFeedback() {
@@ -41,6 +41,22 @@ public class ReceivedFeedback {
 
 	public String getComment() {
 		return comment;
+	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
+	}
+
+	public Service getService() {
+		return service;
+	}
+
+	public void setService(Service service) {
+		this.service = service;
 	}
 
 	@Override
