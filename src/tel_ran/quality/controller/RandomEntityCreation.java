@@ -4,8 +4,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
-import tel_ran.quality.model.dao.QualityOrm;
-import tel_ran.qualityControl.entities.*;
+
+import tel_ran.quality.entities.*;
+import tel_ran.quality.model.dao.QualityOrmCreate;
 
 public class RandomEntityCreation {
 	private static Employee genManager ;
@@ -14,7 +15,7 @@ public class RandomEntityCreation {
 	private static final int N_RANDOM = 100;
 	private static final int N_CLIENTS = 100;
 	private static final Set <String> servises = new HashSet<>();
-	static QualityOrm qualityOrm;
+	static QualityOrmCreate qualityOrm;
 	static Random gen = new Random();
 	
 	static{
@@ -23,7 +24,7 @@ public class RandomEntityCreation {
 			
 	public static void main(String[] args) throws Exception {
 		AbstractApplicationContext ctx = new FileSystemXmlApplicationContext("beans.xml");
-		qualityOrm = ctx.getBean(QualityOrm.class);
+		qualityOrm = ctx.getBean(QualityOrmCreate.class);
 		createRandonEmployees();
 		createCompany();
 		createRandomClients();

@@ -1,4 +1,4 @@
-package tel_ran.qualityControl.entities;
+package tel_ran.quality.entities;
 
 import java.util.*;
 import javax.persistence.*;
