@@ -13,6 +13,17 @@ public class Service {
 	@ManyToOne 
 	Company company;
 	
+	@OneToMany(mappedBy="service")
+	Set<Ticket> tickets;
+	
+	public Set<Ticket> getTickets() {
+		return tickets;
+	}
+
+	public void setTickets(Set<Ticket> tickets) {
+		this.tickets = tickets;
+	}
+
 	@OneToOne
     Employee responsibleperson;
 	
@@ -23,6 +34,7 @@ public class Service {
 		super();
 		this.servicename = servicename;
 		questions = new HashSet<>();
+		tickets = new HashSet<>();
 	}
 
 	public Set<Question> getQuestions() {

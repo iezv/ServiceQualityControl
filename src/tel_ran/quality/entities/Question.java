@@ -23,7 +23,7 @@ public class Question {
 		this.maxRating = maxRating;
 		services = new HashSet<>();
 	}
-
+	
 	public Question() {
 		super();
 	}

@@ -48,6 +48,10 @@ public class ReceivedFeedback {
 		return client;
 	}
 
+	public Result getResultQuestion() {
+		return resultQuestion;
+	}
+
 	public void setClient(Client client) {
 		this.client = client;
 	}
@@ -80,6 +84,12 @@ public class ReceivedFeedback {
 		if (feedbackid != other.feedbackid)
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "ReceivedFeedback [feedbackid=" + feedbackid + ", feedbackdate=" + feedbackdate + ", comment=" + comment
+				+ ", resultQuestion=" + resultQuestion + ", client=" + client + ", service=" + service + "]";
 	}
 	
 	

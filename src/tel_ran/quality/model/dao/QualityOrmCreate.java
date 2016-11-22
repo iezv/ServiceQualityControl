@@ -1,12 +1,12 @@
 package tel_ran.quality.model.dao;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import javax.persistence.*;
 import org.springframework.transaction.annotation.Transactional;
-
 import tel_ran.quality.entities.*;
 
 public class QualityOrmCreate {
-	
+		
 	@PersistenceContext(unitName = "springHibernate", type = PersistenceContextType.EXTENDED)
 	EntityManager em;
 	
@@ -95,7 +95,61 @@ public class QualityOrmCreate {
 		feedback.setClient(client);
 		feedback.setService(service);
 		em.persist(feedback);
+		addTicket(feedback);
 		return true;
+	}
+   
+	public void addTicket(ReceivedFeedback feedback) {
+		Date date = feedback.getFeedbackdate();
+		Service service = feedback.getService();
+		Result result = feedback.getResultQuestion();
+		List<Integer> recivedDBres = getReceivedFeedbackByMonseAndByService(date, service.getServicename(),result);
+		
+		for(int i=0; i<recivedDBres.size(); i++){
+			if ((recivedDBres.get(i)%10)==0 && recivedDBres.get(i)==0){
+				//System.out.println(recivedDBres.get(i));
+				long query=(long)em.createQuery(String.format ("select COUNT (t) from Ticket t where t.closeDate is NULL and t.service.servicename='%s' and t.question.questionId=%d",service.getServicename(),i+1)).getSingleResult();
+			//	System.out.println(String.format ("select COUNT (t) from Ticket t where t.closeDate is NULL and t.service.servicename='%s' and t.question.questionId=%d",service.getServicename(),i+1));
+				  if((int)query<1){
+				  	createNewTicket(new Ticket(date), service.getServicename(), i+1);
+				 }
+			}
+		}  
+	} 
+	
+	@Transactional
+	private boolean createNewTicket(Ticket ticket, String servicename, int i) {
+		if (em.find(Ticket.class, ticket.getTicketId()) != null)
+			return false;
+		Question question = em.find(Question.class, i);
+		Service service = em.find(Service.class, servicename);
+		ticket.setQuestion(question);
+		ticket.setService(service);
+		em.persist(ticket);
+		return true;
+		
+	}
+	
+	private List<Integer> getReceivedFeedbackByMonseAndByService(Date date, String servicename, Result result) {
+		List<Integer> reslist = new ArrayList<>();
+		SimpleDateFormat dateForm = new SimpleDateFormat("%yyyy-MM%");
+		String dateStr = dateForm.format(date);
+		long query1=(long)em.createQuery(String.format ("select COUNT (r) from ReceivedFeedback r where r.feedbackdate like '%s' and service='%s' and resultQuestion.ques1 < 3",
+				dateStr, servicename)).getSingleResult();
+		reslist.add((int)query1);
+		long query2=(long)em.createQuery(String.format ("select COUNT (r) from ReceivedFeedback r where r.feedbackdate like '%s' and service='%s' and resultQuestion.ques2 < 3",
+				dateStr, servicename)).getSingleResult();
+		reslist.add((int)query2);
+		long query3=(long)em.createQuery(String.format ("select COUNT (r) from ReceivedFeedback r where r.feedbackdate like '%s' and service='%s' and resultQuestion.ques3 < 3",
+				dateStr, servicename)).getSingleResult();
+		reslist.add((int)query3);
+		long query4=(long)em.createQuery(String.format ("select COUNT (r) from ReceivedFeedback r where r.feedbackdate like '%s' and service='%s' and resultQuestion.ques4 < 3",
+				dateStr, servicename)).getSingleResult();
+		reslist.add((int)query4);
+		long query5=(long)em.createQuery(String.format ("select COUNT (r) from ReceivedFeedback r where r.feedbackdate like '%s' and service='%s' and resultQuestion.ques5 < 3",
+				dateStr, servicename)).getSingleResult();
+		reslist.add((int)query5);
+		return reslist;
 	}
 
 	private Service getService(String serviceName) {
